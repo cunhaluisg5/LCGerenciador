@@ -158,6 +158,11 @@ public class JDAdicionar extends javax.swing.JDialog {
         btLimpar.setText("Limpar");
         btLimpar.setMaximumSize(new java.awt.Dimension(140, 40));
         btLimpar.setPreferredSize(new java.awt.Dimension(140, 40));
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
 
         btSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
@@ -224,6 +229,14 @@ public class JDAdicionar extends javax.swing.JDialog {
             "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btAdicionarActionPerformed
+
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        tfNomeArquivo.setText("");
+        tfNomeConta.setText("");
+        cbTipoArquivo.setSelectedIndex(0);
+        taDetalhes.setText("");
+        tfNomeArquivo.requestFocus();
+    }//GEN-LAST:event_btLimparActionPerformed
 
     private Date stringToDate(String data) throws ParseException{
         SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
