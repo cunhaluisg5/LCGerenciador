@@ -5,18 +5,25 @@
  */
 package view;
 
+import dao.ArquivoDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Arquivo;
+
 /**
  *
  * @author luisg
  */
 public class JDAdicionar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JDAdicionar
-     */
+    private final Date data = new Date();
+    
     public JDAdicionar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tfData.setText(dateToString(data));
     }
 
     /**
@@ -107,7 +114,7 @@ public class JDAdicionar extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,6 +147,11 @@ public class JDAdicionar extends javax.swing.JDialog {
         btAdicionar.setText("Adicionar");
         btAdicionar.setMaximumSize(new java.awt.Dimension(140, 40));
         btAdicionar.setPreferredSize(new java.awt.Dimension(140, 40));
+        btAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAdicionarActionPerformed(evt);
+            }
+        });
 
         btLimpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/limpar.png"))); // NOI18N
@@ -188,9 +200,41 @@ public class JDAdicionar extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
+        try{
+            Arquivo arquivo = new Arquivo();
+            arquivo.setNomeArquivo(tfNomeArquivo.getText());
+            arquivo.setNomeConta(tfNomeConta.getText());
+            arquivo.setTipoArquivo(cbTipoArquivo.getSelectedItem().toString());        
+            arquivo.setDataCriacao(data);
+            arquivo.setDetalhes(taDetalhes.getText());
+
+            if(arquivo.validaCampos()){
+                ArquivoDAO dao = new ArquivoDAO();
+                dao.adicionar(arquivo);
+
+                JOptionPane.showMessageDialog(null, "Adicionado com sucesso!", 
+                "Concluído", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Preencha os campos!", 
+                "Atenção", JOptionPane.WARNING_MESSAGE);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar arquivo!",
+            "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btAdicionarActionPerformed
+
+    private Date stringToDate(String data) throws ParseException{
+        SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+        return fm.parse(data);
+    }
+    
+    private String dateToString(Date data){
+        SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+        return fm.format(data);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

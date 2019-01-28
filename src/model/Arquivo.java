@@ -78,4 +78,9 @@ public class Arquivo {
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
     }
+    
+    public boolean validaCampos(){
+        return !nomeArquivo.equals("") &&
+               !nomeConta.equals("");
+    }
 }
