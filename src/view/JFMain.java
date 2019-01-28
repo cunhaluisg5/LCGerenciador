@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -77,6 +78,11 @@ public class JFMain extends javax.swing.JFrame {
         btBuscar.setText("Buscar");
         btBuscar.setMaximumSize(new java.awt.Dimension(130, 50));
         btBuscar.setPreferredSize(new java.awt.Dimension(130, 50));
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
         tbBarra.add(btBuscar);
         tbBarra.add(jSeparator5);
 
@@ -85,6 +91,11 @@ public class JFMain extends javax.swing.JFrame {
         btSobre.setText("Sobre");
         btSobre.setMaximumSize(new java.awt.Dimension(130, 50));
         btSobre.setPreferredSize(new java.awt.Dimension(130, 50));
+        btSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSobreActionPerformed(evt);
+            }
+        });
         tbBarra.add(btSobre);
         tbBarra.add(jSeparator6);
 
@@ -154,6 +165,17 @@ public class JFMain extends javax.swing.JFrame {
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
         new JDAdicionar(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btAdicionarActionPerformed
+
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        new JDBuscar(this, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void btSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSobreActionPerformed
+        String nome = "Luís Gustavo da Cunha Cipriani";
+        String data = "28/01/2019";
+        JOptionPane.showMessageDialog(null, nome + "\n" + data, "Sobre", 
+        JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btSobreActionPerformed
 
     /**
      * @param args the command line arguments
