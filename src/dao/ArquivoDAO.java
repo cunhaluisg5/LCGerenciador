@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.Arquivo;
 
 /**
@@ -56,6 +57,30 @@ public class ArquivoDAO {
                 arq.setDetalhes(rs.getString("detalhes"));
             }
             return arq;
+        }catch(SQLException erro){
+            throw new RuntimeException(erro);
+        }
+    }
+    
+    public List<Arquivo> buscarArquivoFiltro(String campo, String nome){
+        try{
+            String sql = "SELECT * FROM arquivo WHERE " +campo + " LIKE ?";
+            PreparedStatement stmt = conexao.getConexao().prepareStatement(sql);
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Arquivo> lista = new ArrayList<Arquivo>();
+            
+            while(rs.next()){
+                Arquivo arquivo = new Arquivo();
+                arquivo.setId(rs.getInt("id"));
+                arquivo.setNomeArquivo(rs.getString("nomeArquivo"));
+                arquivo.setNomeConta(rs.getString("nomeConta"));
+                arquivo.setTipoArquivo(rs.getString("tipoArquivo"));
+                arquivo.setDataCriacao(rs.getDate("dataCriacao"));
+                arquivo.setDetalhes(rs.getString("detalhes"));
+                lista.add(arquivo);
+            }
+            return lista;
         }catch(SQLException erro){
             throw new RuntimeException(erro);
         }
