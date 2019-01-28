@@ -183,6 +183,11 @@ public class JDBuscar extends javax.swing.JDialog {
         btSair.setText("Sair");
         btSair.setMaximumSize(new java.awt.Dimension(140, 40));
         btSair.setPreferredSize(new java.awt.Dimension(140, 40));
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -253,6 +258,10 @@ public class JDBuscar extends javax.swing.JDialog {
         tfCampo.setEnabled(true);
         tfCampo.requestFocus();
     }//GEN-LAST:event_btLimparActionPerformed
+
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btSairActionPerformed
 
     private void completaTabela(List<Arquivo> arq){
         limpaTabela();
