@@ -30,7 +30,6 @@ public class JDBuscar extends javax.swing.JDialog {
     public JDBuscar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        buscarArquivos();
     }
 
     private void buscarArquivos(){
@@ -133,7 +132,7 @@ public class JDBuscar extends javax.swing.JDialog {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, true, true, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -205,6 +204,11 @@ public class JDBuscar extends javax.swing.JDialog {
         btEditar.setText("Editar");
         btEditar.setMaximumSize(new java.awt.Dimension(140, 40));
         btEditar.setPreferredSize(new java.awt.Dimension(140, 40));
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
 
         btRemover.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove.png"))); // NOI18N
@@ -266,25 +270,32 @@ public class JDBuscar extends javax.swing.JDialog {
             }else if(brTipo.isSelected()){
                 arq = dao.buscarArquivoFiltro("tipoArquivo", campo);
             }
+            buscarArquivos();
             completaTabela(arq);
         }
     }//GEN-LAST:event_tfCampoKeyReleased
 
     private void brTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brTodosActionPerformed
         if(brTodos.isSelected()){
+            limpaTabela();
             tfCampo.setEnabled(false);
+            buscarArquivos();
             completaTabela(arquivos);
         }
     }//GEN-LAST:event_brTodosActionPerformed
 
     private void brNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brNomeActionPerformed
-        if(brNome.isSelected())
+        if(brNome.isSelected()){
+            limpaTabela();
             tfCampo.setEnabled(true);
+        }
     }//GEN-LAST:event_brNomeActionPerformed
 
     private void brTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brTipoActionPerformed
-        if(brTipo.isSelected())
+        if(brTipo.isSelected()){
+            limpaTabela();
             tfCampo.setEnabled(true);
+        }
     }//GEN-LAST:event_brTipoActionPerformed
 
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
@@ -302,16 +313,8 @@ public class JDBuscar extends javax.swing.JDialog {
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         try{
             arquivo = new Arquivo();
-            arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow(), 0).toString()));
-            /*arquivo.setNomeArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 1).toString());
-            arquivo.setNomeConta(tbInfo.getValueAt(tbInfo.getSelectedRow(), 2).toString());
-            arquivo.setTipoArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 3).toString());
-            try {
-                arquivo.setDataCriacao(stringToDate(tbInfo.getValueAt(tbInfo.getSelectedRow(), 4).toString()));
-            } catch (ParseException ex) {
-                Logger.getLogger(JDBuscar.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            arquivo.setDetalhes((String) tbInfo.getValueAt(tbInfo.getSelectedRow(), 5));*/
+            arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
+            , 0).toString()));
             dao.excluirArquivo(arquivo);
             modelo.removeRow(tbInfo.getSelectedRow());
 
@@ -322,6 +325,26 @@ public class JDBuscar extends javax.swing.JDialog {
             "Atenção", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btRemoverActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+        try{
+        arquivo = new Arquivo();
+        arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
+        , 0).toString()));
+        arquivo.setNomeArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 1).toString());
+        arquivo.setNomeConta(tbInfo.getValueAt(tbInfo.getSelectedRow(), 2).toString());
+        arquivo.setTipoArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 3).toString());
+        arquivo.setDataCriacao(new Date());
+        arquivo.setDetalhes((String) tbInfo.getValueAt(tbInfo.getSelectedRow(), 5));
+        
+        dao.alterarArquivo(arquivo);
+        JOptionPane.showMessageDialog(null, "Arquivo editado com sucesso!",
+        "Concluído", JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao editar arquivo!",
+            "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btEditarActionPerformed
 
     private void completaTabela(List<Arquivo> arq){
         limpaTabela();
