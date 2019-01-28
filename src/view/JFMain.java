@@ -105,6 +105,11 @@ public class JFMain extends javax.swing.JFrame {
         btSair.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btSair.setMaximumSize(new java.awt.Dimension(130, 50));
         btSair.setPreferredSize(new java.awt.Dimension(130, 50));
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
         tbBarra.add(btSair);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -176,6 +181,13 @@ public class JFMain extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, nome + "\n" + data, "Sobre", 
         JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btSobreActionPerformed
+
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", 
+        "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(opcao == JOptionPane.YES_OPTION)
+            System.exit(0);
+    }//GEN-LAST:event_btSairActionPerformed
 
     /**
      * @param args the command line arguments
