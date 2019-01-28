@@ -64,6 +64,11 @@ public class JFMain extends javax.swing.JFrame {
         btAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btAdicionar.setMaximumSize(new java.awt.Dimension(130, 50));
         btAdicionar.setPreferredSize(new java.awt.Dimension(130, 50));
+        btAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAdicionarActionPerformed(evt);
+            }
+        });
         tbBarra.add(btAdicionar);
         tbBarra.add(jSeparator4);
 
@@ -145,6 +150,10 @@ public class JFMain extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(568, 459));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
+        new JDAdicionar(this, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
