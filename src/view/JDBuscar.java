@@ -6,7 +6,13 @@
 package view;
 
 import dao.ArquivoDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Arquivo;
 
@@ -18,6 +24,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
     DefaultTableModel modelo = new DefaultTableModel();
     List<Arquivo> arquivos;
+    Arquivo arquivo;
     ArquivoDAO dao = new ArquivoDAO();
     
     public JDBuscar(java.awt.Frame parent, boolean modal) {
@@ -46,6 +53,8 @@ public class JDBuscar extends javax.swing.JDialog {
         tbInfo = new javax.swing.JTable();
         btLimpar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        btEditar = new javax.swing.JButton();
+        btRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar");
@@ -120,11 +129,11 @@ public class JDBuscar extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Arquivo", "Conta", "Tipo", "Data", "Detalhes"
+                "Id", "Arquivo", "Conta", "Tipo", "Data", "Detalhes"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -134,11 +143,13 @@ public class JDBuscar extends javax.swing.JDialog {
         tbInfo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbInfo);
         if (tbInfo.getColumnModel().getColumnCount() > 0) {
-            tbInfo.getColumnModel().getColumn(0).setResizable(false);
+            tbInfo.getColumnModel().getColumn(0).setMinWidth(0);
+            tbInfo.getColumnModel().getColumn(0).setMaxWidth(0);
             tbInfo.getColumnModel().getColumn(1).setResizable(false);
             tbInfo.getColumnModel().getColumn(2).setResizable(false);
             tbInfo.getColumnModel().getColumn(3).setResizable(false);
             tbInfo.getColumnModel().getColumn(4).setResizable(false);
+            tbInfo.getColumnModel().getColumn(5).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -148,7 +159,7 @@ public class JDBuscar extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(tfCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,6 +200,23 @@ public class JDBuscar extends javax.swing.JDialog {
             }
         });
 
+        btEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png"))); // NOI18N
+        btEditar.setText("Editar");
+        btEditar.setMaximumSize(new java.awt.Dimension(140, 40));
+        btEditar.setPreferredSize(new java.awt.Dimension(140, 40));
+
+        btRemover.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove.png"))); // NOI18N
+        btRemover.setText("Remover");
+        btRemover.setMaximumSize(new java.awt.Dimension(140, 40));
+        btRemover.setPreferredSize(new java.awt.Dimension(140, 40));
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -198,9 +226,14 @@ public class JDBuscar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,14 +243,17 @@ public class JDBuscar extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(579, 480));
+        setSize(new java.awt.Dimension(622, 480));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -263,11 +299,36 @@ public class JDBuscar extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        try{
+            arquivo = new Arquivo();
+            arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow(), 0).toString()));
+            /*arquivo.setNomeArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 1).toString());
+            arquivo.setNomeConta(tbInfo.getValueAt(tbInfo.getSelectedRow(), 2).toString());
+            arquivo.setTipoArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 3).toString());
+            try {
+                arquivo.setDataCriacao(stringToDate(tbInfo.getValueAt(tbInfo.getSelectedRow(), 4).toString()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JDBuscar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            arquivo.setDetalhes((String) tbInfo.getValueAt(tbInfo.getSelectedRow(), 5));*/
+            dao.excluirArquivo(arquivo);
+            modelo.removeRow(tbInfo.getSelectedRow());
+
+            JOptionPane.showMessageDialog(null, "Arquivo removido com sucesso!", 
+            "Concluído", JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao remover arquivo!", 
+            "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btRemoverActionPerformed
+
     private void completaTabela(List<Arquivo> arq){
         limpaTabela();
         modelo = (DefaultTableModel) tbInfo.getModel();
         for(Arquivo a : arq){
             modelo.addRow(new Object[]{
+                a.getId(),
                 a.getNomeArquivo(),
                 a.getNomeConta(),
                 a.getTipoArquivo(),
@@ -281,6 +342,16 @@ public class JDBuscar extends javax.swing.JDialog {
         for(int i = tbInfo.getRowCount() - 1; i >= 0; --i){ 
             modelo.removeRow(i); 
         } 
+    }
+    
+    private Date stringToDate(String data) throws ParseException{
+        SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+        return fm.parse(data);
+    }
+    
+    private String dateToString(Date data){
+        SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+        return fm.format(data);
     }
     /**
      * @param args the command line arguments
@@ -328,7 +399,9 @@ public class JDBuscar extends javax.swing.JDialog {
     private javax.swing.JRadioButton brNome;
     private javax.swing.JRadioButton brTipo;
     private javax.swing.JRadioButton brTodos;
+    private javax.swing.JButton btEditar;
     private javax.swing.JButton btLimpar;
+    private javax.swing.JButton btRemover;
     private javax.swing.JButton btSair;
     private javax.swing.ButtonGroup grFiltros;
     private javax.swing.JPanel jPanel1;
