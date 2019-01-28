@@ -172,6 +172,11 @@ public class JDBuscar extends javax.swing.JDialog {
         btLimpar.setText("Limpar");
         btLimpar.setMaximumSize(new java.awt.Dimension(140, 40));
         btLimpar.setPreferredSize(new java.awt.Dimension(140, 40));
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
 
         btSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
@@ -226,6 +231,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
     private void brTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brTodosActionPerformed
         if(brTodos.isSelected()){
+            tfCampo.setEnabled(false);
             completaTabela(arquivos);
         }
     }//GEN-LAST:event_brTodosActionPerformed
@@ -239,6 +245,14 @@ public class JDBuscar extends javax.swing.JDialog {
         if(brTipo.isSelected())
             tfCampo.setEnabled(true);
     }//GEN-LAST:event_brTipoActionPerformed
+
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        tfCampo.setText("");
+        brNome.setSelected(true);
+        limpaTabela();
+        tfCampo.setEnabled(true);
+        tfCampo.requestFocus();
+    }//GEN-LAST:event_btLimparActionPerformed
 
     private void completaTabela(List<Arquivo> arq){
         limpaTabela();
