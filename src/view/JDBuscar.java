@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import dao.ArquivoDAO;
@@ -10,15 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Arquivo;
 
 /**
  *
- * @author luisg
+ * @author Luís Gustavo da Cunha Cipriani
  */
 public class JDBuscar extends javax.swing.JDialog {
 
@@ -179,6 +172,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
         btLimpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/limpar.png"))); // NOI18N
+        btLimpar.setMnemonic('l');
         btLimpar.setText("Limpar");
         btLimpar.setMaximumSize(new java.awt.Dimension(140, 40));
         btLimpar.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -190,6 +184,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
         btSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
+        btSair.setMnemonic('s');
         btSair.setText("Sair");
         btSair.setMaximumSize(new java.awt.Dimension(140, 40));
         btSair.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -201,6 +196,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
         btEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit.png"))); // NOI18N
+        btEditar.setMnemonic('e');
         btEditar.setText("Editar");
         btEditar.setMaximumSize(new java.awt.Dimension(140, 40));
         btEditar.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -212,6 +208,7 @@ public class JDBuscar extends javax.swing.JDialog {
 
         btRemover.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/remove.png"))); // NOI18N
+        btRemover.setMnemonic('r');
         btRemover.setText("Remover");
         btRemover.setMaximumSize(new java.awt.Dimension(140, 40));
         btRemover.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -311,38 +308,46 @@ public class JDBuscar extends javax.swing.JDialog {
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        try{
-            arquivo = new Arquivo();
-            arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
-            , 0).toString()));
-            dao.excluirArquivo(arquivo);
-            modelo.removeRow(tbInfo.getSelectedRow());
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover ?",
+        "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(opcao == JOptionPane.YES_OPTION){
+            try{
+                arquivo = new Arquivo();
+                arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
+                , 0).toString()));
+                dao.excluirArquivo(arquivo);
+                modelo.removeRow(tbInfo.getSelectedRow());
 
-            JOptionPane.showMessageDialog(null, "Arquivo removido com sucesso!", 
-            "Concluído", JOptionPane.INFORMATION_MESSAGE);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao remover arquivo!", 
-            "Atenção", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Arquivo removido com sucesso!", 
+                "Concluído", JOptionPane.INFORMATION_MESSAGE);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Erro ao remover arquivo!", 
+                "Atenção", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        try{
-        arquivo = new Arquivo();
-        arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
-        , 0).toString()));
-        arquivo.setNomeArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 1).toString());
-        arquivo.setNomeConta(tbInfo.getValueAt(tbInfo.getSelectedRow(), 2).toString());
-        arquivo.setTipoArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 3).toString());
-        arquivo.setDataCriacao(new Date());
-        arquivo.setDetalhes((String) tbInfo.getValueAt(tbInfo.getSelectedRow(), 5));
-        
-        dao.alterarArquivo(arquivo);
-        JOptionPane.showMessageDialog(null, "Arquivo editado com sucesso!",
-        "Concluído", JOptionPane.INFORMATION_MESSAGE);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao editar arquivo!",
-            "Atenção", JOptionPane.ERROR_MESSAGE);
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente editar ?",
+        "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(opcao == JOptionPane.YES_OPTION){
+            try{
+            arquivo = new Arquivo();
+            arquivo.setId(Integer.parseInt(tbInfo.getValueAt(tbInfo.getSelectedRow()
+            , 0).toString()));
+            arquivo.setNomeArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 1).toString());
+            arquivo.setNomeConta(tbInfo.getValueAt(tbInfo.getSelectedRow(), 2).toString());
+            arquivo.setTipoArquivo(tbInfo.getValueAt(tbInfo.getSelectedRow(), 3).toString());
+            arquivo.setDataCriacao(new Date());
+            arquivo.setDetalhes((String) tbInfo.getValueAt(tbInfo.getSelectedRow(), 5));
+
+            dao.alterarArquivo(arquivo);
+            JOptionPane.showMessageDialog(null, "Arquivo editado com sucesso!",
+            "Concluído", JOptionPane.INFORMATION_MESSAGE);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Erro ao editar arquivo!",
+                "Atenção", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btEditarActionPerformed
 

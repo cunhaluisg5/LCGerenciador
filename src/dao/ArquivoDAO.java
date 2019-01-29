@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import connection.Conexao;
@@ -15,7 +10,7 @@ import model.Arquivo;
 
 /**
  *
- * @author luisg
+ * @author Luís Gustavo da Cunha Cipriani
  */
 public class ArquivoDAO {
     Conexao conexao = new Conexao();
@@ -63,7 +58,7 @@ public class ArquivoDAO {
     
     public List<Arquivo> buscarArquivoFiltro(String campo, String nome){
         try{
-            String sql = "SELECT * FROM arquivo WHERE " +campo + " LIKE ?";
+            String sql = "SELECT * FROM arquivo WHERE upper(" + campo + ") LIKE ?";
             PreparedStatement stmt = conexao.getConexao().prepareStatement(sql);
             stmt.setString(1, "%" + nome + "%");
             ResultSet rs = stmt.executeQuery();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import dao.ArquivoDAO;
@@ -14,7 +9,7 @@ import model.Arquivo;
 
 /**
  *
- * @author luisg
+ * @author Luís Gustavo da Cunha Cipriani
  */
 public class JDAdicionar extends javax.swing.JDialog {
 
@@ -144,6 +139,7 @@ public class JDAdicionar extends javax.swing.JDialog {
 
         btAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/adicionar.png"))); // NOI18N
+        btAdicionar.setMnemonic('a');
         btAdicionar.setText("Adicionar");
         btAdicionar.setMaximumSize(new java.awt.Dimension(140, 40));
         btAdicionar.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -155,6 +151,7 @@ public class JDAdicionar extends javax.swing.JDialog {
 
         btLimpar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/limpar.png"))); // NOI18N
+        btLimpar.setMnemonic('l');
         btLimpar.setText("Limpar");
         btLimpar.setMaximumSize(new java.awt.Dimension(140, 40));
         btLimpar.setPreferredSize(new java.awt.Dimension(140, 40));
@@ -166,6 +163,7 @@ public class JDAdicionar extends javax.swing.JDialog {
 
         btSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
+        btSair.setMnemonic('s');
         btSair.setText("Sair");
         btSair.setMaximumSize(new java.awt.Dimension(140, 40));
         btSair.setPreferredSize(new java.awt.Dimension(140, 40));

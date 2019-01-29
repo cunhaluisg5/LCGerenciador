@@ -128,6 +128,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/add.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="97"/>
                 <Property name="text" type="java.lang.String" value="Adicionar"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -152,6 +153,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/search.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="98"/>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[130, 50]"/>
@@ -174,6 +176,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/about.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="115"/>
                 <Property name="text" type="java.lang.String" value="Sobre"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[130, 50]"/>
@@ -196,6 +199,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/exit.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="105"/>
                 <Property name="text" type="java.lang.String" value="Sair"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">

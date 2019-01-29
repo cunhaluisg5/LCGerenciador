@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Color;
@@ -10,7 +5,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author luisg
+ * @author Luís Gustavo da Cunha Cipriani
  */
 public class JFMain extends javax.swing.JFrame {
 
@@ -60,6 +55,7 @@ public class JFMain extends javax.swing.JFrame {
         btAdicionar.setBackground(new java.awt.Color(255, 255, 255));
         btAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add.png"))); // NOI18N
+        btAdicionar.setMnemonic('a');
         btAdicionar.setText("Adicionar");
         btAdicionar.setFocusable(false);
         btAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -75,6 +71,7 @@ public class JFMain extends javax.swing.JFrame {
 
         btBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search.png"))); // NOI18N
+        btBuscar.setMnemonic('b');
         btBuscar.setText("Buscar");
         btBuscar.setMaximumSize(new java.awt.Dimension(130, 50));
         btBuscar.setPreferredSize(new java.awt.Dimension(130, 50));
@@ -88,6 +85,7 @@ public class JFMain extends javax.swing.JFrame {
 
         btSobre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/about.png"))); // NOI18N
+        btSobre.setMnemonic('s');
         btSobre.setText("Sobre");
         btSobre.setMaximumSize(new java.awt.Dimension(130, 50));
         btSobre.setPreferredSize(new java.awt.Dimension(130, 50));
@@ -101,6 +99,7 @@ public class JFMain extends javax.swing.JFrame {
 
         btSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit.png"))); // NOI18N
+        btSair.setMnemonic('i');
         btSair.setText("Sair");
         btSair.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btSair.setMaximumSize(new java.awt.Dimension(130, 50));
